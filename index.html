@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Қоғамдық тәртіп порталы</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#263238',
+                        bgLight: '#f9f9f1',
+                        accentBlue: '#e0f7fa',
+                        accentGreen: '#e8f5e9'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #f9f9f1; }
+        
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #imageModal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        #mobileMenu {
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(100%);
+        }
+        #mobileMenu.active {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="antialiased text-primary">
+
+    <header class="fixed top-0 left-0 w-full bg-white/80 backdrop-blur-md z-[1000] border-b border-gray-100">
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="font-bold text-xl tracking-tighter flex items-center gap-2">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+                    <span class="text-white text-xs">⚖️</span>
+                </div>
+                <span>ZAN.ORDER</span>
+            </div>
+
+            <ul class="hidden md:flex gap-8 text-sm font-medium">
+                <li><a href="#" class="hover:text-cyan-600 transition">Басты бет</a></li>
+                <li><a href="#introduction" class="hover:text-cyan-600 transition">Кіріспе</a></li>
+                <li><a href="#violations" class="hover:text-cyan-600 transition">Құқықбұзушылықтар</a></li>
+            </ul>
+
+            <button id="menuBtn" class="md:hidden flex flex-col gap-1.5 z-[1100]">
+                <span class="w-6 h-0.5 bg-primary transition-all duration-300" id="line1"></span>
+                <span class="w-6 h-0.5 bg-primary transition-all duration-300" id="line2"></span>
+                <span class="w-6 h-0.5 bg-primary transition-all duration-300" id="line3"></span>
+            </button>
+        </nav>
+
+        <div id="mobileMenu" class="fixed top-0 right-0 h-screen w-[75%] bg-white shadow-2xl z-[1050] flex flex-col p-10 gap-6 md:hidden">
+            <a href="#" onclick="toggleMenu()" class="text-xl font-semibold border-b pb-2">Басты бет</a>
+            <a href="#introduction" onclick="toggleMenu()" class="text-xl font-semibold border-b pb-2">Кіріспе</a>
+            <a href="#violations" onclick="toggleMenu()" class="text-xl font-semibold border-b pb-2">Құқықбұзушылықтар</a>
+        </div>
+    </header>
+
+    <section class="relative min-h-[95vh] flex items-center justify-center bg-gradient-to-b from-accentBlue from-20% via-accentBlue/30 via-60% to-bgLight to-95% pt-24 pb-32 px-4 fade-up">
+        <div class="text-center max-w-4xl mx-auto">
+            <span class="inline-block py-1 px-4 rounded-full bg-white text-primary text-[10px] md:text-xs font-bold mb-6 shadow-sm uppercase tracking-widest">
+                Заң және Тәртіп
+            </span>
+            <h1 class="text-4xl md:text-7xl font-bold leading-[1.2] md:leading-[1.1] mb-8">
+                Қоғамдық тәртіп — <br> ел тыныштығы
+            </h1>
+            <p class="text-base md:text-xl text-gray-500 max-w-2xl mx-auto mb-12 leading-relaxed">
+                Әкімшілік құқықбұзушылықтардың алдын алу және азаматтардың құқықтық сауаттылығын арттыруға арналған портал.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 md:gap-5 justify-center mt-4">
+                <a href="#introduction" class="px-8 md:px-10 py-4 md:py-5 bg-primary text-white rounded-full font-semibold hover:scale-105 transition active:scale-95 shadow-xl text-center">
+                    Толығырақ білу
+                </a>
+                <a href="#violations" class="px-8 md:px-10 py-4 md:py-5 bg-white border border-gray-200 rounded-full font-semibold hover:bg-gray-50 transition active:scale-95 shadow-sm text-center">
+                    Құқықбұзушылықтарды көру
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="introduction" class="py-20 md:py-32 bg-white px-6">
+        <div class="max-w-4xl mx-auto text-center fade-up">
+            <h2 class="text-2xl md:text-4xl font-bold mb-8 text-primary">Кіріспе</h2>
+            <p class="text-lg md:text-xl text-gray-600 leading-relaxed">
+                Қоғамдық тәртіп пен адамгершілік — қоғам өміріндегі негізгі құндылықтардың бірі. Қазақстан Республикасының Әкімшілік құқық бұзушылықтар кодексіне (ӘҚБтК) сәйкес, қоғамдық тәртіпке және адамгершілікке қол сұғатын әрекеттер әкімшілік жауапкершілікке тартылады. Бұл құқықбұзушылықтар адамдардың қауіпсіздігіне, қоғамдық тыныштыққа және моральдық нормаларға зиян келтіреді.
+            </p>
+        </div>
+    </section>
+
+    <section id="violations" class="py-20 md:py-24 px-4 bg-bgLight">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16 fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Құқықбұзушылық түрлері</h2>
+                <div class="w-16 h-1 bg-primary mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 items-start">
+                <script>
+                    const cards = [
+                        { img: 'img/2.jpeg', title: 'Ұсақ бұзақылық (434-бап)', text: 'Көшеде төбелес, айқай, адамдарға балағат сөз айту. Қоғамдық орындарда сыйламаушылық көрсету.' },
+                        { img: 'img/1.jpeg', title: 'Қоғамдық орынды ластау (434-2-бап)', text: 'Көшеге бөтелке, қағаз немесе тамақ қалдығын тастау. Саябақтар мен аялдамаларды ластау.' },
+                        { img: 'img/3.jpeg', title: 'Түнгі тыныштықты бұзу (437-бап)', text: 'Түнгі уақытта (22:00-ден 9:00-ге дейін) қатты шу шығару, көршілерді мазалайтын музыка.' },
+                        { img: 'img/6.jpeg', title: 'Вандализм', text: 'Ғимарат қабырғаларына сурет салу, саябақтағы орындықтарды сындыру, мүлікті бүлдіру.' },
+                        { img: 'img/8.jpeg', title: 'Көліктегі тәртіпсіздік', text: 'Автобуста айқайлау, орындыққа аяқпен шығу, басқа жолаушыларға кедергі келтіру.' },
+                        { img: 'img/5.jpeg', title: 'Бағынбау (667-бап)', text: 'Құқық қорғау органдары қызметкерінің заңды талаптарына қарсылық көрсету.' },
+                        { img: 'img/7.jpeg', title: 'Жол ережесі (615-бап)', text: 'Жаяу жүргіншілердің жолдан белгіленбеген жерден өтуі немесе қауіп төндіруі.' },
+                        { img: 'img/4.jpeg', title: 'Ішімдік ішу (440-бап)', text: 'Саябақтарда, көшелерде алкогольдік ішімдіктер ішу немесе мас күйінде жүру.' }
+                    ];
+
+                    cards.forEach(card => {
+                        document.write(`
+                            <article class="bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 fade-up group">
+                                <div class="overflow-hidden cursor-zoom-in relative">
+                                    <img src="${card.img}" alt="${card.title}" onclick="openModal('${card.img}')" class="w-full h-auto transition duration-700 group-hover:scale-110">
+                                    <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition pointer-events-none"></div>
+                                </div>
+                                <div class="p-6 md:p-8">
+                                    <h3 class="text-base md:text-lg font-bold mb-3 md:mb-4 leading-tight">${card.title}</h3>
+                                    <p class="text-gray-500 text-xs md:text-sm leading-relaxed">${card.text}</p>
+                                </div>
+                            </article>
+                        `);
+                    });
+                </script>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-accentGreen py-16 md:py-24 px-6 border-t border-black/5">
+        <div class="max-w-4xl mx-auto text-center fade-up">
+            <h2 class="text-2xl md:text-4xl font-bold mb-6 italic leading-tight">«Тәртіпке бағынған құл болмайды»</h2>
+            <p class="text-sm md:text-lg text-gray-600 mb-12">Қоғамдық тәртіп пен адамгершілікке қол сұғатын құқықбұзушылықтар қоғамдағы тыныштықты бұзады. Әрбір азамат өз іс-әрекетін бақылап, қоғамдық нормаларды сақтауы, заң талаптарына бағынуы маңызды.</p>
+            <div class="pt-10 border-t border-black/5 text-xs text-gray-400">
+                &copy; 2026 Құқықтық ағарту порталы. Барлық құқықтар қорғалған.
+            </div>
+        </div>
+    </footer>
+
+    <div id="imageModal" onclick="closeModal()">
+        <img id="modalImg" src="" class="max-w-[95%] max-h-[90vh] rounded-lg shadow-2xl scale-95 transition-transform duration-300">
+    </div>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const line1 = document.getElementById('line1');
+        const line2 = document.getElementById('line2');
+        const line3 = document.getElementById('line3');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            line1.classList.toggle('rotate-45');
+            line1.classList.toggle('translate-y-2');
+            line2.classList.toggle('opacity-0');
+            line3.classList.toggle('-rotate-45');
+            line3.classList.toggle('-translate-y-2');
+        }
+
+        menuBtn.addEventListener('click', toggleMenu);
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+
+        function openModal(src) {
+            modal.style.display = 'flex';
+            modalImg.src = src;
+            setTimeout(() => { modalImg.style.transform = 'scale(1)'; }, 10);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modalImg.style.transform = 'scale(0.9)';
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }, 200);
+        }
+    </script>
+</body>
+</html>
